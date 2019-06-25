@@ -5,7 +5,7 @@ import Breadcrumb from './Breadcrumb';
 
 const { Header, Content, Sider } = Layout;
 
-export default function PrimaryLayout({ location, children }) {
+export default function PrimaryLayout({ location, breadcrumb, children }) {
   return <Layout>
     <Header className="header">
       <div className="logo" />
@@ -25,7 +25,7 @@ export default function PrimaryLayout({ location, children }) {
         <LeftNav path={location.pathname} />
       </Sider>
       <Layout style={{ padding: '0 24px 24px' }}>
-        <Breadcrumb path={location.pathname} />
+        <Breadcrumb path={location.pathname} breadcrumb={breadcrumb} />
         <Content
           style={{
             background: '#fff',

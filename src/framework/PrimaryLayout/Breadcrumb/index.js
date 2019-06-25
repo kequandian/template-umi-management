@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react';
 import { Breadcrumb } from 'antd';
+import Link from 'umi/link';
 import router from '@/config/router.config';
 
-export default ({ path }) => {
+export default ({ path, breadcrumb }) => {
   const pathAry = useMemo(() => {
     const arr = path.split("\/");
     const rst = [];
@@ -18,13 +19,33 @@ export default ({ path }) => {
 
   }, [path]);
 
+  if (breadcrumb.length) {
+    return <Breadcrumb className="ZEleA-Breadcrumb-margin">
+      {breadcrumb.map((item, i) => {
+        return <Breadcrumb.Item key={i}>
+          {item.path ? (
+            <Link to={item.path}>
+              {item.title}
+            </Link>
+          ) : (
+              item.title
+            )}
+        </Breadcrumb.Item>;
+      })}
+    </Breadcrumb>
+  }
+
   return <Breadcrumb className="ZEleA-Breadcrumb-margin">
     {pathAry.map((item, i) => {
       if (item === '/') {
-        return <Breadcrumb.Item key={item}>主页</Breadcrumb.Item>;
+        return <Breadcrumb.Item key={item}>
+          <Link to="/">主页</Link>
+        </Breadcrumb.Item>;
       }
       return <Breadcrumb.Item key={item}>
-        {findPath(item, router).name}
+        <Link to={item}>
+          {findPath(item, router).name}
+        </Link>
       </Breadcrumb.Item>;
     })}
   </Breadcrumb>
